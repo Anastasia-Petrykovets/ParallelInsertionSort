@@ -14,8 +14,11 @@ public class InsertionSortInt
         return numbersArray;
     }
     
-    public int[] InsertionSort(int[]numbersArray)
+    public int[] InsertionSort(int[] numbersArray)
     {
+        var partsCountD = numbersArray.Length * .01;
+        int partsCount = (int) partsCountD;
+        List<int[]> arrays = ParallelInsertionSortInt.Divide(numbersArray, partsCount);
         for (int i = 1; i < numbersArray.Length; ++i)
         {
             int j = i - 1;
@@ -28,7 +31,9 @@ public class InsertionSortInt
 
             numbersArray[j + 1] = k;
         }
-        return numbersArray;
+        int[] resultArray;
+        resultArray = MergeSortInt.MergeArraysFromList(arrays);
+        return resultArray;
     }
 
     public void OutputIntSorted(int[] numbersArray, int count)
